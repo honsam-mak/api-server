@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+        logicalFilePath="0-init.xml"
+>
+        <!--
+          - This script is always patched before execution of other patches
+          -->
+        <changeSet id="0-1" author="init" runAlways="true">
+                <preConditions onFail="CONTINUE">
+                        <dbms type="mysql" />
+                </preConditions>
+
+                <comment>
+                        1. Set the storage engine to Innodb for MySQL
+                </comment>
+
+                <sql>
+                SET storage_engine=INNODB;
+                </sql>
+        </changeSet>
+        <changeSet id="0-2" author="init" runAlways="true">
+                <createTable tableName="user">
+                        <column name="us_id" type="bigint" autoIncrement="true">
+                                <constraints primaryKey="true" primaryKeyName="pk_user"/>
+                        </column>
+                        <column name="us_name" type="varchar(64)">
+                                <constraints nullable="false" />
+                        </column>
+                        <column name="us_time_creation" type="datetime">
+                                <constraints nullable="true" />
+                        </column>
+                </createTable>
+        </changeSet>
+</databaseChangeLog>
