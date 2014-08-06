@@ -4,18 +4,17 @@ import javax.inject.Inject;
 
 import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.mal.config.DatabaseConfig;
 import com.mal.orm.User;
+import com.mal.test.AbstractBasicSpringBase;
 
 @ContextConfiguration(
-    classes={DatabaseConfig.class},
-    initializers=com.mal.config.AppContextIntializer.class
+    classes={DatabaseConfig.class}
 )
-public class UserDaoTest extends AbstractTestNGSpringContextTests {
+public class UserDaoTest extends AbstractBasicSpringBase {
 
 	@Inject
 	private UserDao userDao;
