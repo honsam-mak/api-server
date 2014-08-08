@@ -22,7 +22,7 @@
                 SET storage_engine=INNODB;
                 </sql>
         </changeSet>
-        <changeSet id="0-2" author="init" runAlways="true">
+        <changeSet id="0-2" author="init">
                 <createTable tableName="user">
                         <column name="us_id" type="bigint" autoIncrement="true">
                                 <constraints primaryKey="true" primaryKeyName="pk_user"/>

@@ -9,7 +9,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 @ContextConfiguration(
     initializers=com.mal.config.AppContextIntializer.class
 )
-public class AbstractBasicSpringBase extends AbstractTestNGSpringContextTests {
+public abstract class AbstractBasicSpringBase extends AbstractTestNGSpringContextTests {
 
 	protected AbstractBasicSpringBase() {
 		super();
