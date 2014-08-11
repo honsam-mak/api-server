@@ -16,14 +16,14 @@ public class UserService {
 	@Inject
 	private UserDao userDao;
 
-	public String getUser(long id) {
+	public User getUser(long id) {
 
 		User user = userDao.find(id);
 
-		return "User found. " + user.getCreatedTime();
+        return user;
 	}
 
-	public String post() {
+	public User post() {
 		User user = new User();
 		user.setUserName("test");
     	Date date = new Date();
@@ -31,16 +31,16 @@ public class UserService {
 
 		userDao.saveNew(user);
 
-		return "Just get it done! " + user.getCreatedTime();
+        return user;
 	}
 
-	public String update(long id) {
+	public User update(long id) {
 		User user = userDao.find(id);
 		user.setUserName("test1");
 
 		userDao.saveExisted(user);
 
-		return "Just updated! " + user.getUserName();
+        return user;
 	}
 
 	public String delete(long id) {

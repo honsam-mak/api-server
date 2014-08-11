@@ -197,6 +197,11 @@
 			<version>${version.springframework}</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+            <version>${version.jackson}</version>
+        </dependency>
 
 
 		<dependency>
@@ -323,4 +328,15 @@
 			</plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>aws</id>
+            <properties>
+                <database.host>localhost</database.host>
+                <database.name>app_test</database.name>
+                <database.username>db_name</database.username>
+                <database.password>password</database.password>
+            </properties>
+        </profile>
+    </profiles>
 </project>
