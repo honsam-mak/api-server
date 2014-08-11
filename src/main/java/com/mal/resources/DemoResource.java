@@ -1,5 +1,6 @@
 package com.mal.resources;
 
+import com.mal.orm.User;
 import com.mal.service.UserService;
 
 import javax.inject.Inject;
@@ -12,7 +13,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Named
 @Path("demo")
-public class DemoResource {
+public class DemoResource extends AbstractRestfulServiceBase{
 
     @Inject
     private UserService userService;
@@ -30,23 +31,22 @@ public class DemoResource {
     }
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
     @Path("/{user_id}")
-    public String getIt(
+    public User getIt(
     	@PathParam("user_id")Long userId) {
 
     	return userService.getUser(userId);
     }
 
     @POST
-    public String postIt() {
+    public User postIt() {
 
     	return userService.post();
     }
 
     @PUT
     @Path("/{user_id}")
-    public String updateIt(
+    public User updateIt(
     	@PathParam("user_id") Long userId) {
 
     	return userService.update(userId);
