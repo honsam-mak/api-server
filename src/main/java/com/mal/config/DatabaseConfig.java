@@ -28,61 +28,58 @@ import com.jolbox.bonecp.BoneCPDataSource;
 @ComponentScan(basePackages="com.mal.dao")
 public class DatabaseConfig {
 //        private static Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
+	
+	public final static String BEAN_NAME_DEFAULT_TX_TEMPLATE = "defaultTxTemplate";
 
-        public final static String BEAN_NAME_DEFAULT_TX_TEMPLATE = "defaultTxTemplate";
+	public static BoneCPDataSource buildBasicDataSourceOfConeCP(Environment environment) {
 
-        public static BoneCPDataSource buildBasicDataSourceOfConeCP(Environment environment)
-        {
-                String databaseUrl = String.format(
-                        "jdbc:mysql://%1$s:3306/%2$s?%3$s",
-                        environment.getProperty("database.host"),
-                        environment.getProperty("database.name"),
-                        environment.getProperty("database.parameter")
-                );
-
+		String databaseUrl = String.format(
+               "jdbc:mysql://%1$s:3306/%2$s?%3$s",
+               environment.getProperty("database.host"),
+               environment.getProperty("database.name"),
+               environment.getProperty("database.parameter"));
+                
 //                logger.debug("Database URL: {}", databaseUrl);
 
-                BoneCPDataSource dataSource = new BoneCPDataSource();
+		BoneCPDataSource dataSource = new BoneCPDataSource();
 
-                dataSource.setDriverClass(environment.getProperty("database.driver"));
-                dataSource.setJdbcUrl(databaseUrl);
-                dataSource.setUsername(environment.getProperty("database.username"));
-                dataSource.setPassword(environment.getProperty("database.password"));
+        dataSource.setDriverClass(environment.getProperty("database.driver"));
+        dataSource.setJdbcUrl(databaseUrl);
+        dataSource.setUsername(environment.getProperty("database.username"));
+        dataSource.setPassword(environment.getProperty("database.password"));
 
-                return dataSource;
-        }
+        return dataSource;
+	}
 
     @Bean(name="dataSource", destroyMethod="close")
-    public DataSource buildDataSource(
-                Environment environment
-        ) {
-                BoneCPDataSource dataSource = buildBasicDataSourceOfConeCP(environment);
+    public DataSource buildDataSource(Environment environment) {
 
-                /**
-                 * Number of pooling
-                 */
-                dataSource.setPartitionCount(2);
-                dataSource.setMinConnectionsPerPartition(15);
-                dataSource.setMaxConnectionsPerPartition(75);
-                dataSource.setAcquireIncrement(3);
+    	BoneCPDataSource dataSource = buildBasicDataSourceOfConeCP(environment);
 
-                /**
-                 * Timeout/age of pooling
-                 */
-                dataSource.setIdleMaxAgeInMinutes(30);
-                dataSource.setIdleConnectionTestPeriodInMinutes(240);
-                dataSource.setConnectionTimeoutInMs(5000);
+        /**
+          * Number of pooling
+          */
+        dataSource.setPartitionCount(2);
+        dataSource.setMinConnectionsPerPartition(15);
+        dataSource.setMaxConnectionsPerPartition(75);
+        dataSource.setAcquireIncrement(3);
 
-                dataSource.setDefaultAutoCommit(true);
-                dataSource.setDeregisterDriverOnClose(true);
+        /**
+          * Timeout/age of pooling
+          */
+        dataSource.setIdleMaxAgeInMinutes(30);
+        dataSource.setIdleConnectionTestPeriodInMinutes(240);
+        dataSource.setConnectionTimeoutInMs(5000);
 
-                return dataSource;
+        dataSource.setDefaultAutoCommit(true);
+        dataSource.setDeregisterDriverOnClose(true);
+
+        return dataSource;
     }
 
     @Bean(name="entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean buildEntityManager(
-        @Named("dataSource") DataSource dataSource
-    ) {
+    public LocalContainerEntityManagerFactoryBean buildEntityManager(@Named("dataSource") DataSource dataSource) {
+
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaDialect(new org.springframework.orm.jpa.vendor.HibernateJpaDialect());
@@ -101,23 +98,18 @@ public class DatabaseConfig {
     }
 
     @Bean(name="transactionManager")
-    public JpaTransactionManager jpaTransactionManager(
-        EntityManagerFactory entityManagerFactory
-    ) {
+    public JpaTransactionManager jpaTransactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager();
     }
 
-        @Bean(name=BEAN_NAME_DEFAULT_TX_TEMPLATE)
-        public TransactionTemplate buildDataSourceTxTemplate(
-                JpaTransactionManager dataSourceTxManager
-        ) {
-                return new TransactionTemplate(dataSourceTxManager);
-        }
+    @Bean(name=BEAN_NAME_DEFAULT_TX_TEMPLATE)
+    public TransactionTemplate buildDataSourceTxTemplate(JpaTransactionManager dataSourceTxManager) {
+    	return new TransactionTemplate(dataSourceTxManager);
+    }
 
-        @Bean
-        public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor()
-        {
-                return new PersistenceExceptionTranslationPostProcessor();
-        }
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
+    	return new PersistenceExceptionTranslationPostProcessor();
+    }
 
 }
