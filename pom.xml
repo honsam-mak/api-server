@@ -45,9 +45,9 @@
         <mysql.log.profile>false</mysql.log.profile>
 
         <database.host>localhost</database.host>
-        <database.name>app_test</database.name>
-        <database.username>dev</database.username>
-        <database.password>ft53738078</database.password>
+        <database.name>test</database.name>
+        <database.username>root</database.username>
+        <database.password>123456</database.password>
         <database.parameter>autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=${mysql.log.profile}</database.parameter>
 
         <database.driver>com.mysql.jdbc.Driver</database.driver>

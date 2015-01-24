@@ -35,6 +35,8 @@ public class DemoResource extends AbstractRestfulServiceBase{
     public User getIt(
     	@PathParam("user_id")Long userId) {
 
+        getLogger().info("Demo API: userId [{}]", userId);
+
     	return userService.getUser(userId);
     }
 
