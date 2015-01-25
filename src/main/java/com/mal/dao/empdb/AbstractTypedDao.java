@@ -1,4 +1,4 @@
-package com.mal.dao;
+package com.mal.dao.empdb;
 
 import com.googlecode.gentyref.GenericTypeReflector;
 import javax.persistence.EntityManager;
@@ -20,21 +20,21 @@ public abstract class AbstractTypedDao<T, PK_T> {
 		return getEntityManager().find(entityType, primaryKey);
 	}
 
-	@Transactional
+	@Transactional("transactionManagerEmp")
 	public void saveNew(T newEntity) {
 		getEntityManager().getTransaction().begin();
 		getEntityManager().persist(newEntity);
 		getEntityManager().getTransaction().commit();
 	}
 
-	@Transactional
+	@Transactional("transactionManagerEmp")
 	public void saveExisted(T existedEntity) {
 		getEntityManager().getTransaction().begin();
 		getEntityManager().merge(existedEntity);
 		getEntityManager().getTransaction().commit();
 	}
 
-	@Transactional
+	@Transactional("transactionManagerEmp")
 	public void remove(PK_T primaryKey) {
 		T entity = find(primaryKey);
 

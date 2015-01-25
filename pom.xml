@@ -52,6 +52,11 @@
 
         <database.driver>com.mysql.jdbc.Driver</database.driver>
 
+		<database2.host>localhost</database2.host>
+		<database2.name>employee</database2.name>
+        <database2.username>root</database2.username>
+        <database2.password>123456</database2.password>
+
         <liquibase.driver>${database.driver}</liquibase.driver>
         <liquibase.url>jdbc:mysql://${database.host}:3306/${database.name}?${database.parameter}</liquibase.url>
         <liquibase.username>${database.username}</liquibase.username>

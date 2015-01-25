@@ -1,6 +1,8 @@
 package com.mal.service;
 
-import com.mal.dao.UserDao;
+import com.mal.dao.empdb.LoginDao;
+import com.mal.dao.primarydb.UserDao;
+import com.mal.orm.Login;
 import com.mal.orm.User;
 
 import java.sql.Timestamp;
@@ -15,12 +17,26 @@ public class UserService {
 
 	@Inject
 	private UserDao userDao;
+	
+	@Inject
+	private LoginDao loginDao;
 
 	public User getUser(long id) {
 
 		User user = userDao.find(id);
 
         return user;
+	}
+	
+	public User getUserInfoByLogin(String loginName, String password) {
+		
+		User user = null;
+		Login employee = loginDao.findEmployee(loginName, password);
+		if (employee != null) {
+			user = userDao.find(employee.getUserId().longValue());
+		}
+		
+		return user;
 	}
 
 	public User post() {
@@ -48,4 +64,5 @@ public class UserService {
 
 		return "Just removed " + id;
 	}
+	
 }

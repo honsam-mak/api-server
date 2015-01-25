@@ -7,4 +7,8 @@
         <persistence-unit name="main-database" transaction-type="RESOURCE_LOCAL">
                 <provider>org.hibernate.ejb.HibernatePersistence</provider>
         </persistence-unit>
+
+        <persistence-unit name="employee-database" transaction-type="RESOURCE_LOCAL">
+                <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        </persistence-unit>
 </persistence>

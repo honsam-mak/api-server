@@ -1,12 +1,16 @@
 package com.mal.resources;
 
+import com.mal.orm.Login;
 import com.mal.orm.User;
+import com.mal.service.EmployeeService;
 import com.mal.service.UserService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
 
 /**
  * Root resource
@@ -17,6 +21,9 @@ public class DemoResource extends AbstractRestfulServiceBase{
 
     @Inject
     private UserService userService;
+    
+    @Inject
+    private EmployeeService employeeService;
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -60,5 +67,32 @@ public class DemoResource extends AbstractRestfulServiceBase{
     	@PathParam("user_id") Long userId) {
 
     	return userService.delete(userId);
+    }
+    
+    @GET
+    @Path("/employee/{employee_id}")
+    public Login getEmployee(
+    		@PathParam("employee_id") Integer eid) {
+    	
+    	return employeeService.getEmployee(eid);
+    }
+
+    @POST
+    @Path("/employee")
+    @Consumes(APPLICATION_FORM_URLENCODED)
+    public Login postLogin(
+    		@FormParam("name") String name,
+    		@FormParam("password") String password) {
+
+    	return employeeService.post(name, password);
+    }
+    
+    @GET
+    @Path("/user-info")
+    public User getUserInfo(
+    		@QueryParam("name") String loginName,
+    		@QueryParam("password") String password) {
+    	
+    	return userService.getUserInfoByLogin(loginName, password);
     }
 }

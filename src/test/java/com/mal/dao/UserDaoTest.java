@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.mal.test.AbstractDaoTestBase;
+
 import org.junit.Assert;
 import org.no_ip.mikelue.jpa.test.dbunit.annotation.DataSetOperation;
 import org.no_ip.mikelue.jpa.test.dbunit.annotation.OpDataSet;
@@ -14,6 +15,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.mal.config.DatabaseConfig;
+import com.mal.dao.primarydb.UserDao;
 import com.mal.orm.User;
 import com.mal.test.AbstractBasicSpringBase;
 

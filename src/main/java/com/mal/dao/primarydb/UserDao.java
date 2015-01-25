@@ -1,4 +1,4 @@
-package com.mal.dao;
+package com.mal.dao.primarydb;
 
 import com.mal.orm.User;
 

@@ -25,18 +25,18 @@ import com.jolbox.bonecp.BoneCPDataSource;
 
 @Configuration
 @EnableTransactionManagement(mode=ASPECTJ)
-@ComponentScan(basePackages="com.mal.dao.primarydb")
-public class DatabaseConfig {
+@ComponentScan(basePackages="com.mal.dao.empdb")
+public class EmpDatabaseConfig {
 //        private static Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
 	
-	public final static String BEAN_NAME_DEFAULT_TX_TEMPLATE = "defaultTxTemplate";
+	public final static String BEAN_NAME_DEFAULT_TX_TEMPLATE = "empTxTemplate";
 
-	public static BoneCPDataSource buildBasicDataSourceOfConeCP(Environment environment) {
+	public static BoneCPDataSource buildSecondDataSourceOfConeCP(Environment environment) {
 
 		String databaseUrl = String.format(
                "jdbc:mysql://%1$s:3306/%2$s?%3$s",
-               environment.getProperty("database.host"),
-               environment.getProperty("database.name"),
+               environment.getProperty("database2.host"),
+               environment.getProperty("database2.name"),
                environment.getProperty("database.parameter"));
                 
 //                logger.debug("Database URL: {}", databaseUrl);
@@ -45,16 +45,16 @@ public class DatabaseConfig {
 
         dataSource.setDriverClass(environment.getProperty("database.driver"));
         dataSource.setJdbcUrl(databaseUrl);
-        dataSource.setUsername(environment.getProperty("database.username"));
-        dataSource.setPassword(environment.getProperty("database.password"));
+        dataSource.setUsername(environment.getProperty("database2.username"));
+        dataSource.setPassword(environment.getProperty("database2.password"));
 
         return dataSource;
 	}
-	
-    @Bean(name="dataSource", destroyMethod="close")
-    public DataSource buildDataSource(Environment environment) {
 
-    	BoneCPDataSource dataSource = buildBasicDataSourceOfConeCP(environment);
+    @Bean(name="dataSource2", destroyMethod="close")
+    public DataSource buildSecondDataSource(Environment environment) {
+
+    	BoneCPDataSource dataSource = buildSecondDataSourceOfConeCP(environment);
 
         /**
           * Number of pooling
@@ -77,14 +77,14 @@ public class DatabaseConfig {
         return dataSource;
     }
 
-    @Bean(name="entityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean buildEntityManager(
-    		@Named("dataSource") DataSource dataSource) {
+    @Bean(name="entityManagerFactoryEmp")
+    public LocalContainerEntityManagerFactoryBean buildEmpEntityManager(
+    		@Named("dataSource2") DataSource dataSource) {
 
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaDialect(new org.springframework.orm.jpa.vendor.HibernateJpaDialect());
-        entityManagerFactory.setPersistenceUnitName("main-database");
+        entityManagerFactory.setPersistenceUnitName("employee-database");
 
         /**
          * Setup the configuration of Hibernate
@@ -99,16 +99,15 @@ public class DatabaseConfig {
         return entityManagerFactory;
     }
 
-    @Bean(name="transactionManager")
-    public JpaTransactionManager jpaTransactionManager(
-    		@Named("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
-
+    @Bean(name="transactionManagerEmp")
+    public JpaTransactionManager jpaEmpTransactionManager(
+    		@Named("entityManagerFactoryEmp") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Bean(name=BEAN_NAME_DEFAULT_TX_TEMPLATE)
     public TransactionTemplate buildDataSourceTxTemplate(
-    		@Named("transactionManager") JpaTransactionManager dataSourceTxManager) {
+    		@Named("transactionManagerEmp") JpaTransactionManager dataSourceTxManager) {
 
     	return new TransactionTemplate(dataSourceTxManager);
     }
