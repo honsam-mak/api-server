@@ -33,11 +33,11 @@
         <version.slf4j>1.7.5</version.slf4j>
         <version.snakeyaml>1.12</version.snakeyaml>
         <version.spring.data>1.3.1.RELEASE</version.spring.data>
-        <version.springframework>3.2.4.RELEASE</version.springframework>
+        <version.springframework>4.1.2.RELEASE</version.springframework>
         <version.testng>6.8.7</version.testng>
         <version.mikelue.jpaenhance>1.1.0</version.mikelue.jpaenhance>
 
-        <version.plugin.tomcat6>2.1</version.plugin.tomcat6>
+        <version.plugin.tomcat6>2.2</version.plugin.tomcat6>
 
         <!--
           - Settings of database
