@@ -1,6 +1,6 @@
 package com.mal.config;
 
-import static org.springframework.context.annotation.AdviceMode.ASPECTJ;
+import static org.springframework.context.annotation.AdviceMode.PROXY;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.jolbox.bonecp.BoneCPDataSource;
 
 @Configuration
-@EnableTransactionManagement(mode=ASPECTJ)
+@EnableTransactionManagement(mode=PROXY)
 @ComponentScan(basePackages="com.mal.dao.primarydb")
 public class DatabaseConfig {
 //        private static Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);

@@ -11,21 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 public abstract class AbstractDao<T, PK_T> extends AbstractTypedDao<T, PK_T>{
 
-	@Inject
-	@Qualifier("entityManagerFactory") 
-	EntityManagerFactory factory;
-
+	@PersistenceContext(unitName = "entityManagerFactory")
 	EntityManager entityManager;
-
-	@PostConstruct
-	public void init() {
-    		entityManager = factory.createEntityManager();
-	}
-
-	@PreDestroy
-	public void cleanup() {
-    		entityManager.close();
-	}
 
 	public EntityManager getEntityManager() {
 		return entityManager;

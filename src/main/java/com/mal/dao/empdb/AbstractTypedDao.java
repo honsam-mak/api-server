@@ -22,16 +22,12 @@ public abstract class AbstractTypedDao<T, PK_T> {
 
 	@Transactional("transactionManagerEmp")
 	public void saveNew(T newEntity) {
-		getEntityManager().getTransaction().begin();
 		getEntityManager().persist(newEntity);
-		getEntityManager().getTransaction().commit();
 	}
 
 	@Transactional("transactionManagerEmp")
 	public void saveExisted(T existedEntity) {
-		getEntityManager().getTransaction().begin();
 		getEntityManager().merge(existedEntity);
-		getEntityManager().getTransaction().commit();
 	}
 
 	@Transactional("transactionManagerEmp")
@@ -41,8 +37,6 @@ public abstract class AbstractTypedDao<T, PK_T> {
 		if (entity == null)
 			return;
 
-		getEntityManager().getTransaction().begin();
 		getEntityManager().remove(entity);
-		getEntityManager().getTransaction().commit();
 	}
 }
