@@ -2,3 +2,6 @@ user:
 - {
     us_id: 3001, us_name: "joe", us_time_creation: "2014-08-08 00:00:00"
 }
+- {
+    us_id: 3002, us_name: "jack", us_time_creation: "2014-08-08 00:00:00"
+}

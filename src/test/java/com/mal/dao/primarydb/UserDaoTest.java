@@ -1,5 +1,7 @@
 package com.mal.dao.primarydb;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,18 +31,29 @@ public class UserDaoTest extends AbstractDaoTestBase {
 
 	@Test (dataProvider = "UserData")
     @OpDataSet(dataSetClazz = GetUserData.class, beforeOperation = Insert, afterOperation = Delete)
-	public void findUser(Long userId) {
+	public void findUser(Long userId, String name) {
 
 		User user = userDao.find(userId);
 
 		Assert.assertNotNull(user);
-		Assert.assertEquals("joe", user.getUserName());
+		Assert.assertEquals(name, user.getUserName());
+	}
+	
+	@Test
+    @OpDataSet(dataSetClazz = GetUserData.class, beforeOperation = Insert, afterOperation = Delete)
+	public void listUser() {
+		
+		List<User> users = userDao.listUser();
+		
+		Assert.assertEquals(3, users.size());
 	}
 
 	@DataProvider (name = "UserData")
 	private Object[][] getUserId() {
 		return new Object[][] {
-            { new Long(3001)}
+            { new Long(101), "test"},
+            { new Long(3001), "joe"},
+            { new Long(3002), "jack"}
 		};
 	}
 
