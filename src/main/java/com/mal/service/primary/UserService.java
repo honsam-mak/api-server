@@ -1,4 +1,4 @@
-package com.mal.service;
+package com.mal.service.primary;
 
 import com.mal.dao.empdb.LoginDao;
 import com.mal.dao.primarydb.UserDao;

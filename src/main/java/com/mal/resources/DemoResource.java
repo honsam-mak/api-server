@@ -2,8 +2,8 @@ package com.mal.resources;
 
 import com.mal.orm.Login;
 import com.mal.orm.User;
-import com.mal.service.EmployeeService;
-import com.mal.service.UserService;
+import com.mal.service.emp.EmployeeService;
+import com.mal.service.primary.UserService;
 
 import javax.inject.Inject;
 import javax.inject.Named;

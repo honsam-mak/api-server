@@ -1,6 +1,8 @@
 package com.mal.test;
 
 import com.mal.config.DatabaseConfig;
+import com.mal.config.EmpDatabaseConfig;
+
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -13,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * Test base for DAO
  */
 @ContextConfiguration(
-        classes={DatabaseConfig.class}
+        classes={DatabaseConfig.class, EmpDatabaseConfig.class}
 )
 @TestExecutionListeners(listeners = {TransactionalTestExecutionListener.class})
 @Test(suiteName="DaoSuite")
@@ -23,7 +25,7 @@ public abstract class AbstractDaoTestBase extends AbstractDatabaseTestBase{
         super();
     }
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
     /*
