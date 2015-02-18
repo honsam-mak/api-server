@@ -1,4 +1,4 @@
-package com.mal.dao;
+package com.mal.dao.primarydb;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +34,7 @@ public class UserDaoTest extends AbstractDaoTestBase {
 		User user = userDao.find(userId);
 
 		Assert.assertNotNull(user);
+		Assert.assertEquals("joe", user.getUserName());
 	}
 
 	@DataProvider (name = "UserData")
