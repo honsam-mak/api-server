@@ -44,7 +44,16 @@ public class DemoResource extends AbstractRestfulServiceBase{
 
         getLogger().info("Demo API: userId [{}]", userId);
 
-    	return userService.getUser(userId);
+	try {
+	   User user = userService.getUser(userId);
+	
+	   if(user == null)
+	   	throw new CustomException.Builder(400).setMessage("User is not existed").build();
+
+    	   return user;
+	} catch(Exception e) {
+	   throw new CustomException.Builder(400).setMessage("Failed to get user info").build();
+	}
     }
 
     @POST
